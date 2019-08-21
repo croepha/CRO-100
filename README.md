@@ -82,6 +82,7 @@ I sometimes also announce things on Twitter: https://twitter.com/croepha
 # FAQ #
 
 Q: How is this different from Ben Eater's 8-bit computer?
+
 A:
 - I am trying to implement a specific ISA, Ben is trying to make a simple computer
 - I use CMOS components (cheaper)
