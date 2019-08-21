@@ -1,6 +1,6 @@
 This is a work-in-progress TIS-100 compatible computer, designed from the 
 ground up from scratch, in a way that evokes contemporary ~1975 engineering.
-This include a circuit design for the computer, eventually some associated 
+This includes a circuit design for the computer, eventually some associated 
 source code for the machine code assembler, and FLASH writing tool.
 
 This is a personal leisure project, and contributions here aren't welcome for 
