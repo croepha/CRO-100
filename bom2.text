@@ -1,0 +1,100 @@
+
+3x  xor gates: 74HC86 
+1x Counter: $0.43 74HC161
+4x Adder     : $0.67 74HC283 
+7x flash  $1.37 SST39SF010A 
+11x Tranceiver: $0.52 74HC245 
+14x Register: $0.51 74HC173 
+2x Comparator: $0.45 cd4063b
+2x SRAM: $2.54 AS6C6264
+5x  555
+50x	0.1µF capacitor
+18x 10kR
+15x diodes
+3x11x LED
+3x11x 470R
+
+$55.13
+
+
+15x  555
+10   SIPO
+10   PISO
+
+10   74HC04 inverter
+20	0.1µF capacitor
+10	0.01µF capacitor
+30   470Ω resistor
+20   10kΩ resistor
+
+
+
+
+
+
+
+
+
+
+
+10   SIPO
+10   PISO
+more 555?
+10   74HC04 inverter
+
+
+
+
+
+
+Extra BOM:
+20	0.1µF capacitor
+10	0.01µF capacitor
+30   470Ω resistor
+20   10kΩ resistor
+
+
+
+CLOCK BOM:
+x  5  555
+
+
+ALU:
+
+6x Tranceiver: $0.52 74HC245 
+6x Register: $0.51 74HC173 
+3x11x LED
+3x11x 470R
+12x 10kR
+11x diodes
+
+2x flash  $1.37 SST39SF010A 
+3x Adder     : $0.67 74HC283 
+3x  xor gates: 74HC86 
+
+
+
+BUF:
+3x Register: $0.51 74HC173 
+
+
+PC:
+3x Tranceiver: $0.52 74HC245 
+1x Adder     : $0.67 74HC283 
+1x Register: $0.51 74HC173 
+2x Comparator: $0.45 cd4063b
+1x Counter: $0.43 74HC161
+4x 10kR
+
+
+CONTROL:
+2x SRAM: $2.54 AS6C6264
+4x Register: $0.51 74HC173 
+3x flash  $1.37 SST39SF010A 
+
+TRXVER:
+2x Tranceiver: $0.52 74HC245 
+2x flash  $1.37 SST39SF010A 
+4x diode
+2x 10kR
+

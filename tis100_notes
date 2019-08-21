@@ -1,0 +1,225 @@
+
+
+
+
+
+
+
+PORT_OVERVIEW_2:: READY =
+ (THEIR_MODE !=OUR_MODE  && (
+   THEIR_VPORT==US || 
+   (THEIR_VPORT==LAST&&THEIR_LAST==US  ) ||
+   (THEIR_VPORT==ANY && (THEY_CHOSE_US || OUR_MODE == W))
+) 
+
+
+
+
+# external OR gate...
+THEY_CHOSE_US_OR_OUR_MODE_IS_W  = [reg] || ...
+
+MODE  = [reg]
+LAST  = [reg]
+VPORT = OPCODE & ...
+
+
+
+
+INTERCONNECT_2::
+SIDE0_READY =
+   SIDE0_MODE!=SIDE1_MODE && (
+     SIDE1_E==THIS_SIDE  ||
+     ( SIDE1_E==ANY && (SIDE1_E!= || SIDE0_MODE==READ))
+   )
+
+
+
+
+ ENABLE = 
+ PORT_OVERVIEW_2::PORT == THIS_SIDE
+
+
+
+
+
+
+VIRT_PORT:
+000 VLEFT
+001 VRIGHT
+010 VUP
+011 VDOWN
+100 VLAST
+101 VANY
+110 VACC
+111 VNIL
+
+REAL_PORT:
+00 LEFT
+01 RIGHT
+10 UP
+11 DOWN
+
+
+PortStates:
+IDLE
+WRITE C=0
+WRITE C=1
+WRITE C=2
+WRITE C=3
+READ  C=0
+READ  C=1
+READ  C=2
+READ  C=3
+READ  ANY WAITING
+WRITE ANY WAITING
+WRITE ANY C=0
+WRITE ANY C=1
+WRITE ANY C=2
+WRITE ANY C=3
+READ  ANY C=0
+READ  ANY C=1
+READ  ANY C=2
+READ  ANY C=3
+
+
+
+CONTROL0 IN:
+OP_CODE[8x]
+PC_ROVR 
+PC_RNEG 
+PC_SGTE
+PC_CEQE
+ACC_EQZ
+ALU_NEG
+
+CONTROL0 OUT:
+PC_LD         enable load on the counter, setting this and none of the other jumps, will reset
+PC_LDEND
+PC_LDBUS
+PC_LDSUM
+
+
+JMP,  REL come from the OP_CODE...
+JMP  REL  ROVR RNEG SGTE CEQE | LD   LDEND  LDBUS  LDSUM
+0    X    X    X    X    0      0     0     0      0
+0    X    X    X    X    1      1     0     0      0
+1    0    X    X    X    X      1     0     1      0
+1    1    0    0    0    X      1     0     0      1
+1    1    0    0    1    X      1     1     0      0
+1    1    0    1    X    X      1     0     0      0
+1    1    1    0    X    X      1     0     0      0
+1    1    1    1    X    X      1     1     0      0
+
+
+PORT CONTROL ROM:
+WRITE	    LAST  L    R	U	D	L	R	U	D	:	C	LST		
+READY D (3)  (3)   RDY  RDY  RDY  RDY  ANY  ANY  ANY  ANY  :	(2)  SET  IDL  EN
+X     LEFT	X	0	X	X	X	X	X	X	X	:	X	0	1	0
+X     LEFT	X	1	X	X	X	X	X	X	X	:	L	0	0	1
+X     RIGHT   X	X	0	X	X	X	X	X	X	:	X	0	1	0
+X     RIGHT   X	X	1	X	X	X	X	X	X	:	R	0	0	1
+X     UP  	X	X	X	0	X	X	X	X	X	:	X	0	1	0
+X     UP	  X	X	X	1	X	X	X	X	X	:	U	0	0	1
+X     DOWN	X	X	X	X	0	X	X	X	X	:	X	0	1	0
+X     DOWN	X	X	X	X	1	X	X	X	X	:	D	0	0	1
+X     LAST	0	X	X	X	X	X	X	X	X	:	X	0	1	0
+X     LAST	L	0	X	X	X	X	X	X	X	:	X	0	1	0
+X     LAST	L	1	X	X	X	X	X	X	X	:	L	0	0	1
+X     LAST	R	X	0	X	X	X	X	X	X	:	X	0	1	0
+X     LAST	R	X	1	X	X	X	X	X	X	:	R	0	0	1
+X     LAST	U	X	X	0	X	X	X	X	X	:	X	0	1	0
+X     LAST	U	X	X	1	X	X	X	X	X	:	U	0	0	1
+X     LAST	D	X	X	X	0	X	X	X	X	:	X	0	1	0
+X     LAST	D	X	X	X	1	X	X	X	X	:	D	0	0	1
+1     ANY	 X	X	X	X	X	1	X	X	X	:	L	1	0	1
+0     ANY	 X	X	X	X	X	X	1	X	X	:	R	1	0	1
+1     ANY	 X	X	X	X	X	0	1	X	X	:	R	1	0	1
+0     ANY	 X	X	X	X	X	1	0	X	X	:	L	1	0	1
+1     ANY	 X	X	X	X	X	0	0	1	X	:	U	1	0	1
+0     ANY	 X	X	X	X	X	0	0	X	1	:	D	1	0	1
+1     ANY	 X	X	X	X	X	0	0	0	1	:	D	1	0	1
+0     ANY	 X	X	X	X	X	0	0	1	0	:	U	1	0	1
+X     ANY	 X	1	X	X	X	0	0	0	0	:	L	1	0	1
+X     ANY	 X	0	1	X	X	0	0	0	0	:	R	1	0	1
+X     ANY	 X	0	0	1	X	0	0	0	0	:	U	1	0	1
+X     ANY	 X	0	0	0	1	0	0	0	0	:	D	1	0	1
+X     ANY	 X	0	0	0	0	0	0	0	0	:	X	0	1	0
+X     NIL	 X	X	X	X	X	X	X	X	X	:	X	0	0	0
+
+TODO: CONTROL ROM:
+
+BUFFER_OUT = WRITE_READY = BUFFER_IS_SET_Q
+BUFFER_IS_SET_D = WRVPORT
+BUFFER_SET = WRVPORT
+
+IF(BUFFER_IS_SET_Q) D=B 
+ELSE IF(RDPORT) D=A
+ELSE D=NIL
+
+
+
+CONTROL2 IN:
+OP_CODE[8x]
+
+CONTROL2 OUT:
+RDMEM
+SUB
+SAVE
+RESTORE
+RDACC
+WRACC
+
+
+
+
+
+
+PORT CONTROL IN:
+
+SIDE0_PORT_ENABLE[C]
+SIDE0_C0
+SIDE0_C1
+SIDE1_PORT_ENABLE[C]
+SIDE1_C0
+SIDE1_C1
+LR_OR_UD
+SIDE0_IS_IDLE_Q
+SIDE1_IS_IDLE_Q
+
+REG PORT CONTROL OUT:
+PORT_OE
+PORT_DIR
+SIDE0_READY
+SIDE1_READY
+
+
+
+
+
+
+00111100   ????????  SWP           : BAK_SAVE BAK_RESTORE ALU_WRACC 
+00111101   ????????  SAV           : BAK_SAVE
+00111110   ????????  NEG           : RDACC ALU_RDZERO ALU_WRACC ALU_SUB 
+00111111   ????????  HCF           : TODO
+01011011   ???? MMMM JMP M         : RDMEM PC_JMP  
+01011100   ???? MMMM JEZ M         : RDMEM PC_JMP   : IF  ACC_EZ
+01011101   ???? MMMM JNZ M         : RDMEM PC_JMP   : IF !ACC_EZ
+01011110   ???? MMMM JGZ M         : RDMEM PC_JMP   : IF !ACC_EZ &&!ACC_NEG
+01001111   ???? MMMM JLZ M         : RDMEM PC_JMP   : IF  ACC_NEG
+01010  AAA ????????  JRO A         : RD[A] ALU_RDPC   ALU_WRPC
+01011  AAA ????????  ADD A         : RD[A] ALU_RDACC  ALU_WRACC 
+01100  AAA ????????  SUB A         : RD[A] ALU_RDACC  ALU_WRACC 
+01101  xXXXXXXXXXX   ADD [X]       : RDMEM ALU_RDACC  ALU_WRACC
+01110  xXXXXXXXXXX   SUB [X]       : RDMEM ALU_RDACC  ALU_WRACC  ALU_SUB
+01111  xXXXXXXXXXX   JRO [X]       : RDMEM PC_JMP PC_REL  
+10 BBB xXXXXXXXXXX   MOV [X] B     : RDMEM WR[B]
+11 BBB AAA ????????  MOV A B       : RD[A] WR[B]
+11111111   ????????  NOP           : alias for MOV NIL NIL
+
+
+11 ___ AAA ????????  MOV A ACC     : RD[A] ALU_RDZERO ALU_WRACC
+11 BBB AAA ????????  MOV A B       : RD[A] PORT_BUF_SET SLEEP :: PORT_BUF_OUT WR[B]
+
+
+                  
+
