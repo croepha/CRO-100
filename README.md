@@ -65,10 +65,10 @@ Raspberry PI as a cassette tape emulator.
 
 # MORE RESOURCES #
 
-Learn about Zachtronics and their games here: http://www.zachtronics.com/
-Ben Eater's 8-bit breadboard computer: https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU
-I occasionally work on this and other projects live on Twitch: https://www.twitch.tv/croepha
-I sometimes also announce things on Twitter: https://twitter.com/croepha
+ - Learn about Zachtronics and their games here: http://www.zachtronics.com/
+ - Ben Eater's 8-bit breadboard computer: https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU
+ - I occasionally work on this and other projects live on Twitch: https://www.twitch.tv/croepha
+ - I sometimes also announce things on Twitter: https://twitter.com/croepha
 
 
 # POTENTIAL FURTHER WORK #
