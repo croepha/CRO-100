@@ -1,3 +1,4 @@
+
 This is a work-in-progress TIS-100 compatible computer, designed from the 
 ground up from scratch, in a way that evokes contemporary ~1975 engineering.
 This includes a circuit design for the computer, eventually some associated 
@@ -64,6 +65,16 @@ computer to be able to simply read pre-compiled machine code in over some kind
 of serial connection.  This serial connection could possibly be fed from a
 cassette tape.  But for practical purposes we can just use an Arduino or
 Raspberry PI as a cassette tape emulator.
+
+It should also be noted that the TIS-100 ships with a bunch of test 
+"sequences" that are used as input to the programs that are run, it also has
+the ability to log all of the output that the program generates.  For similar
+reasons, I think that it is out of scope to implement that functionality
+within the CRO-100 (at-least for now).  But we can use a raspberry pi for this
+as well.  You could think of this as additional cassette tape emulation or 
+even the emulator of a punchcard reader and line printer.  The input and
+output in this case would basically be that same as a serial connection.
+
 
 # MORE RESOURCES #
 

@@ -38,8 +38,8 @@ static const int DATA_PIN[] = {
 };
 
 void set_address_pins(unsigned  long address) {
-    for(unsigned long long i=0;i<17;i++) {
-        if (address & (1<<i)) {
+    for(unsigned long i=0;i<17;i++) {
+        if (address & (1UL<<i)) {
             digitalWrite(ADDRESS_PIN[i], HIGH);
         } else {
             digitalWrite(ADDRESS_PIN[i], LOW);      
@@ -129,7 +129,7 @@ void flash_chip_erase() {
 
 
 
-void flash_write_byte(unsigned int addr, unsigned char _byte) {
+void flash_write_byte(unsigned long addr, unsigned char _byte) {
     unsigned long address[] = {0x5555, 0x2AAA, 0x5555, addr};
     unsigned char data[] = {0xAA, 0x55, 0xA0, _byte};
     send_software_command_sequence(address, data, 4);
@@ -137,6 +137,264 @@ void flash_write_byte(unsigned int addr, unsigned char _byte) {
 }
 
 
+void test_rom () {
+    
+    
+    Serial.print("READY_FOR_WRITE\n");
+    
+    Serial.print("TEST\n");
+    
+    
+    Serial.print("Write A short:\n");
+    for (unsigned long i=0; i < 1UL<<10; i++) {
+        unsigned char b = 29+i*13;
+        flash_write_byte(i, b);
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    Serial.print("\n");
+    
+    Serial.print("Read A short:\n");
+    for (unsigned long i=0; i < 1UL<<10; i++) {
+        unsigned char b = 29+i*13;
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    Serial.print("\n");
+    
+    Serial.print("Erasing\n");
+    flash_chip_erase();
+    Serial.print("Erasing done\n");
+    
+    
+    Serial.print("Write B short:\n");
+    for (unsigned long i=0; i < 1UL<<10; i++) {
+        unsigned char b = 31+i*89;
+        flash_write_byte(i, b);
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    
+    Serial.print("\n");
+    
+    Serial.print("Read B short:\n");
+    for (unsigned long i=0; i < 1UL<<10; i++) {
+        unsigned char b = 31+i*89;
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    
+    Serial.print("\n");
+    
+    Serial.print("Write: A long\n");
+    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
+        unsigned char b = 29+i*13;
+        flash_write_byte(i, b);
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    
+    Serial.print("\n");
+    
+    Serial.print("Read: A long\n");
+    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
+        unsigned char b = 29+i*13;
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    
+    Serial.print("\n");
+    
+    Serial.print("Erasing\n");
+    flash_chip_erase();
+    Serial.print("Erasing done\n");
+    
+    
+    Serial.print("Write B long:\n");
+    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
+        unsigned char b = 31+i*89;
+        flash_write_byte(i, b);
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    Serial.print("\n");
+    
+    Serial.print("Read B long:\n");
+    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
+        unsigned char b = 31+i*89;
+        auto _ = flash_read_byte(i);
+        if (_ != b) {
+            Serial.print("bad write??");
+            Serial.print(i, HEX);
+            Serial.print("\n");
+        }
+        if (!(i % 0x1000)) {
+            Serial.print(i, HEX);
+            Serial.print(' ');
+        }
+    }
+    
+}
+
+
+
+#include <CRC32.h>
+
+
+void serial_write() {
+    
+    long bytes_read = 0;
+    long bytes_to_read = 1UL<<17;
+    
+    CRC32 crc;
+    
+    int progress = 0;
+    
+    for(;;) {
+        
+        unsigned char buffer[32];
+        //Serial.print("DEBUG 1\n");
+        long _to_read_now = sizeof buffer;
+        if (bytes_to_read-bytes_read <sizeof buffer) {
+            _to_read_now = bytes_to_read-bytes_read;
+        }
+        _to_read_now = Serial.readBytes(buffer, _to_read_now);
+#if 0
+        Serial.print("DEBUG 2 ");
+        Serial.print(_to_read_now);
+        Serial.print("\n");
+#endif
+        
+        for (int i =0; i<_to_read_now;i++) {
+            
+            unsigned char b = buffer[i];
+            progress++;
+            if (progress>=32) {
+                Serial.print("PROGRESS_TICK\n");
+                progress=0;
+            }
+            
+            auto address = bytes_read;
+            bytes_read++;
+            
+            crc.update(b);
+            flash_write_byte(address, b);
+            unsigned char _ = flash_read_byte(address);
+            if (_ != b) {
+                Serial.print("bad write??");
+                Serial.print(address, HEX);
+                Serial.print(" ");
+                Serial.print(b, HEX);
+                Serial.print(" ");
+                Serial.print(_, HEX);
+                Serial.print("\n");
+            }
+            
+            
+            
+            
+            
+        }
+        
+        if (bytes_read >= bytes_to_read) break;
+    }
+    
+    
+    // Calculate the checksum.
+    Serial.print("UPLOAD_CHECKSUM ");
+    Serial.print(crc.finalize(), HEX);
+    Serial.print("\n");
+    
+    
+    CRC32 crc2;
+    
+    for (unsigned long i=0; i < 1UL<<17; i++) {
+        unsigned char _ = flash_read_byte(i);
+        crc2.update(_);
+    }
+    
+    // Calculate the checksum.
+    Serial.print("CHECKSUM ");
+    Serial.print(crc2.finalize(), HEX);
+    Serial.print("\n");
+}
+
+void debug_print_address(unsigned long address) {
+    Serial.print("Debug dump: 0x");
+    Serial.print(address, HEX);
+    Serial.print(" -> 0x");
+    Serial.print(flash_read_byte(address), HEX);
+    Serial.print("\n");
+}
+void test2() {
+    for (int i1=0;i1<17;i1++) {
+        debug_print_address(1UL<<i1);
+    }
+    for (int i2=0;i2<17;i2++) {
+        flash_write_byte(1UL<<i2, 0);
+        for (int i1=0;i1<17;i1++) {
+            debug_print_address(1UL<<i1);
+        }
+    }
+    
+}
 
 
 void setup() {
@@ -158,11 +416,12 @@ void setup() {
     
     Serial.begin(2000000);
     
-    Serial.print("TEST\n");
     
-    //  for (int i=0; i<32; i++) {
-    //    pinMode(i, INPUT);
-    //  }
+    while (Serial.available() > 0) {
+        Serial.read();
+    }
+    
+    Serial.print("START\n");
     
     
     
@@ -170,9 +429,6 @@ void setup() {
     digitalWrite(FLASH_OE, LOW);
     digitalWrite(FLASH_WE, HIGH);
     delay(1);
-    
-    
-    
     
     flash_enter_software_id();
     Serial.print("Data: 0x");
@@ -185,130 +441,23 @@ void setup() {
     flash_exit_software_id();
     
     
-    
     Serial.print("Erasing\n");
     flash_chip_erase();
     Serial.print("Erasing done\n");
     
     
-    Serial.print("Write A short:\n");
-    for (unsigned long i=0; i < 1UL<<10; i++) {
-        unsigned char b = 29+i*13;
-        flash_write_byte(i, b);
-        
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    Serial.print("\n");
+    //test_rom();
+    //write_segment_data();
+    serial_write();
+    //test2();
     
-    Serial.print("Read A short:\n");
-    for (unsigned long i=0; i < 1UL<<10; i++) {
-        unsigned char b = 29+i*13;
-        auto _ = flash_read_byte(i);
-        if (_ != b) {
-            Serial.print("bad write??");
-            Serial.print(i, HEX);
-            Serial.print("\n");
-        }
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    Serial.print("\n");
-    
-    Serial.print("Erasing\n");
-    flash_chip_erase();
-    Serial.print("Erasing done\n");
-    
-    
-    Serial.print("Write B short:\n");
-    for (unsigned long i=0; i < 1UL<<10; i++) {
-        unsigned char b = 31+i*89;
-        flash_write_byte(i, b);
-        
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    
-    Serial.print("\n");
-    
-    Serial.print("Read B short:\n");
-    for (unsigned long i=0; i < 1UL<<10; i++) {
-        unsigned char b = 31+i*89;
-        auto _ = flash_read_byte(i);
-        if (_ != b) {
-            Serial.print("bad write??");
-            Serial.print(i, HEX);
-            Serial.print("\n");
-        }
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    
-    Serial.print("\n");
-    
-    Serial.print("Write: A long\n");
-    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
-        unsigned char b = 29+i*13;
-        flash_write_byte(i, b);
-        
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    
-    Serial.print("\n");
-    
-    Serial.print("Read: A long\n");
-    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
-        unsigned char b = 29+i*13;
-        auto _ = flash_read_byte(i);
-        if (_ != b) {
-            Serial.print("bad write??");
-            Serial.print(i, HEX);
-            Serial.print("\n");
-        }
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    
-    Serial.print("\n");
-    
-    Serial.print("Erasing\n");
-    flash_chip_erase();
-    Serial.print("Erasing done\n");
-    
-    
-    Serial.print("Write B long:\n");
-    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
-        unsigned char b = 31+i*89;
-        flash_write_byte(i, b);
-        
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
-    Serial.print("\n");
-    
-    Serial.print("Read B long:\n");
-    for (unsigned long i=1UL<<10; i < 1UL<<17; i++) {
-        unsigned char b = 31+i*89;
-        auto _ = flash_read_byte(i);
-        if (_ != b) {
-            Serial.print("bad write??");
-            Serial.print(i, HEX);
-            Serial.print("\n");
-        }
-        if (!(i % 0x1000)) {
-            Serial.print(i, HEX);
-        }
-    }
     Serial.print("\n");
     Serial.print("Done\n");
+    
+    digitalWrite(FLASH_CE, HIGH);
+    digitalWrite(FLASH_OE, HIGH);
+    digitalWrite(FLASH_WE, HIGH);
+    
     
 }
 
@@ -318,7 +467,14 @@ void setup() {
 void loop() {
     
     digitalWrite(LED_BUILTIN, HIGH);
+    for(int i=0;i<17;i++) {
+        digitalWrite(ADDRESS_PIN[i], HIGH);
+    }
     delay(1000); 
+    
     digitalWrite(LED_BUILTIN, LOW);   
+    for(int i=0;i<17;i++) {
+        digitalWrite(ADDRESS_PIN[i], LOW);
+    }
     delay(1000);              
 }
