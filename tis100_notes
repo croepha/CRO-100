@@ -1,4 +1,24 @@
 
+RAM programming over serial (Cassette tape protocol):
+
+1. pause system clock
+2. set PRGM_EN0  HIGH
+3. set PRGM_EN1# LOW
+3. pulse RESET
+5:
+for line in 1..15: 
+  for node in 1..12:
+    PRGMOUT 16 bits set to instruction opcode
+    PRGMOUT  1 bit  set to 1 if this is last valid instruction for node
+    PRMGOUT  7 bits
+    pulse CLOCK#
+
+
+3. set PRGM_EN1# HIGH
+2. set PRGM_EN0  LOW
+
+
+7. resume system clock
 
 
 

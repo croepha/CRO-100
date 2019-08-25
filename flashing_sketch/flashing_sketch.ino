@@ -455,7 +455,7 @@ void setup() {
     Serial.print("Done\n");
     
     digitalWrite(FLASH_CE, HIGH);
-    digitalWrite(FLASH_OE, HIGH);
+    digitalWrite(FLASH_OE, HIGH); 
     digitalWrite(FLASH_WE, HIGH);
     
     

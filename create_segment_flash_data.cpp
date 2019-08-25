@@ -102,7 +102,7 @@ u8 _data_for_address(u32 address) {
 
 
 unsigned char data_for_address(unsigned long address) {
-    return _data_for_address(address);
+    return ~_data_for_address(address);
 }
 
 #include <stdio.h>

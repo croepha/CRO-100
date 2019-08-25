@@ -9,6 +9,14 @@ junk/arduino-1.8.9/arduino \
  --port /dev/ttyUSB1
 }
 
+[ ! ]&&{
+junk/arduino-1.8.9/arduino \
+ --board arduino:avr:mega \
+ --verify cassette_tape_emulator/cassette_tape_emulator.ino \
+ --port /dev/ttyUSB1
+}
+
+
 mkdir -p build/
 
 [  ]&&{
