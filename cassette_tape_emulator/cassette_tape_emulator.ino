@@ -78,7 +78,7 @@ void setup () {
         
         for (int bit_i=0; bit_i<8; bit_i++) {
             
-            if (data[data_i] & (1UL<<bit_i)) {
+            if (data[data_i] & (1UL<<(7-bit_i))) {
                 digitalWrite(PIN_PGRMDATA, HIGH);
             } else {
                 digitalWrite(PIN_PGRMDATA, LOW);

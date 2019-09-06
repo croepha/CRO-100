@@ -10,8 +10,6 @@
 #include <sys/epoll.h>
 #include <assert.h>
 
-#define DISPLAY_STRING
-
 static const int chunk_size = 32;
 static const int flash_size = 1<<17;
 static const int chunk_count = flash_size/chunk_size;

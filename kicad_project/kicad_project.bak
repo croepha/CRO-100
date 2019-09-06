@@ -3417,12 +3417,12 @@ Wire Wire Line
 	6950 15250 6950 16750
 Connection ~ 4700 14750
 Wire Wire Line
-	5400 14750 7100 14750
+	5400 14750 6150 14750
 Connection ~ 5000 14750
 Wire Wire Line
 	5100 14750 5000 14750
 Wire Wire Line
-	4000 14750 4300 14750
+	4000 14750 4250 14750
 Wire Wire Line
 	4600 14750 4700 14750
 Wire Wire Line
@@ -4027,8 +4027,6 @@ Wire Wire Line
 Wire Wire Line
 	21100 8250 21100 8000
 Wire Wire Line
-	21100 8250 18150 8250
-Wire Wire Line
 	21000 8350 18150 8350
 Wire Wire Line
 	21000 8350 21000 8000
@@ -4190,8 +4188,6 @@ F 3 "http://www.ti.com/lit/gpn/sn74HC245" H 21400 7500 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	16200 13850 16200 16500
-Wire Wire Line
-	16150 14050 16150 16400
 $Comp
 L Memory_RAM:AS6C4008-55PCN U15
 U 1 1 99F7FC7B
@@ -4352,9 +4348,9 @@ BUS3
 Wire Wire Line
 	16200 16500 15700 16500
 Text HLabel 15700 16500 0    50   Output ~ 0
-PC_RNEG
-Text HLabel 15700 16400 0    50   Output ~ 0
-PC_ROVR
+PC_SUM_SIGN
+Text HLabel 17700 8250 0    50   Output ~ 0
+BUS_SIGN
 Wire Wire Line
 	17350 14350 17250 14350
 Wire Wire Line
@@ -4941,8 +4937,6 @@ Wire Wire Line
 	26400 8050 26400 8350
 Wire Wire Line
 	25900 6200 25900 8400
-Wire Wire Line
-	15700 16400 16150 16400
 Wire Wire Line
 	19100 19000 19100 19750
 Wire Wire Line
@@ -5599,28 +5593,16 @@ Wire Wire Line
 	28000 3550 28000 3850
 Wire Wire Line
 	28150 3900 28150 3550
-Text HLabel 17250 3150 2    50   Output ~ 0
+Text HLabel 17250 3300 2    50   Output ~ 0
 WRITE_READY
-Text HLabel 15500 3300 3    50   Input ~ 0
+Text HLabel 15500 3950 3    50   Input ~ 0
 READY_DOWN
-Text HLabel 15400 3300 3    50   Input ~ 0
+Text HLabel 15400 3950 3    50   Input ~ 0
 READY_UP
-Text HLabel 15300 3300 3    50   Input ~ 0
+Text HLabel 15300 3950 3    50   Input ~ 0
 READY_RIGHT
-Text HLabel 15200 3300 3    50   Input ~ 0
+Text HLabel 15200 3950 3    50   Input ~ 0
 READY_LEFT
-Text HLabel 11250 3300 3    50   Input ~ 0
-ACC_NEG
-Text HLabel 11150 3300 3    50   Input ~ 0
-ACC_EQZ
-Text HLabel 11050 3300 3    50   Input ~ 0
-PC_ROVR
-Text HLabel 10950 3300 3    50   Input ~ 0
-PC_ROVR
-Text HLabel 10850 3300 3    50   Input ~ 0
-PC_ROVR
-Text HLabel 10750 3300 3    50   Input ~ 0
-PC_ROVR
 Wire Wire Line
 	18700 6700 18700 2850
 Wire Wire Line
@@ -5639,54 +5621,19 @@ NoConn ~ 17050 2750
 NoConn ~ 17150 2750
 NoConn ~ 17250 2750
 Wire Wire Line
-	20200 3050 20200 2850
+	20200 3200 20200 2850
 Wire Wire Line
 	20100 2950 20100 2850
 Wire Wire Line
-	20000 2850 20000 2950
-Connection ~ 20000 2950
-Wire Wire Line
-	20000 2950 20100 2950
-Wire Wire Line
-	19900 2850 19900 2950
-Connection ~ 19900 2950
-Wire Wire Line
-	19900 2950 20000 2950
-Wire Wire Line
-	19800 2850 19800 2950
-Connection ~ 19800 2950
-Wire Wire Line
-	19800 2950 19900 2950
-Wire Wire Line
-	19700 2850 19700 2950
-Connection ~ 19700 2950
-Wire Wire Line
-	19700 2950 19800 2950
-Wire Wire Line
-	19500 2950 19500 2850
-Connection ~ 19500 2950
-Wire Wire Line
-	19500 2950 19600 2950
-Wire Wire Line
-	19400 2850 19400 2950
-Connection ~ 19400 2950
-Wire Wire Line
-	19400 2950 19500 2950
-Wire Wire Line
-	19600 2850 19600 2950
-Connection ~ 19600 2950
-Wire Wire Line
-	19600 2950 19700 2950
-Wire Wire Line
 	9750 2850 9750 6700
 Wire Wire Line
-	16950 3050 20200 3050
+	16950 3200 20200 3200
 Connection ~ 15600 2950
 Wire Wire Line
 	15600 2950 15600 2850
 Wire Wire Line
 	13900 2950 15600 2950
-Connection ~ 16950 3050
+Connection ~ 16950 3200
 Connection ~ 12500 3100
 Wire Wire Line
 	10450 3050 12400 3050
@@ -5695,32 +5642,20 @@ Wire Wire Line
 Wire Wire Line
 	12500 3100 15000 3100
 Wire Wire Line
-	15500 3300 15500 2850
+	15500 3950 15500 2850
 Wire Wire Line
-	15400 2850 15400 3300
+	15400 2850 15400 3950
 Wire Wire Line
-	15300 3300 15300 2850
+	15300 3950 15300 2850
 Wire Wire Line
-	15200 2850 15200 3300
+	15200 2850 15200 3950
 Wire Wire Line
-	15700 3050 16950 3050
+	15700 3200 16950 3200
 Wire Wire Line
-	15700 2850 15700 3050
+	15700 2850 15700 3200
 Wire Wire Line
-	16950 3050 16950 2750
+	16950 3200 16950 2750
 NoConn ~ 12700 2750
-Wire Wire Line
-	11250 2850 11250 3300
-Wire Wire Line
-	11150 3300 11150 2850
-Wire Wire Line
-	11050 2850 11050 3300
-Wire Wire Line
-	10950 3300 10950 2850
-Wire Wire Line
-	10850 2850 10850 3300
-Wire Wire Line
-	10750 3300 10750 2850
 Wire Wire Line
 	15100 3150 15100 2850
 Wire Wire Line
@@ -5767,11 +5702,8 @@ Wire Wire Line
 	9850 6650 9850 2850
 Wire Wire Line
 	9650 6750 9650 2850
-Connection ~ 18450 2950
 Wire Wire Line
 	15600 2950 18450 2950
-Wire Wire Line
-	18450 2950 19400 2950
 Wire Wire Line
 	18600 6750 18600 2850
 $Comp
@@ -5818,22 +5750,22 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS173" H 13000 2250 50  0001 C CNN
 	1    13000 2250
 	0    -1   1    0   
 $EndComp
-Text HLabel 9650 1050 1    50   Output ~ 0
+Text HLabel 19000 1050 1    50   Output ~ 0
 PC_LD
-Text HLabel 9750 1050 1    50   Output ~ 0
+Text HLabel 19100 1050 1    50   Output ~ 0
 PC_LDEND
-Text HLabel 9850 1050 1    50   Output ~ 0
+Text HLabel 19200 1050 1    50   Output ~ 0
 PC_LDBUS
-Text HLabel 9950 1050 1    50   Output ~ 0
+Text HLabel 19300 1050 1    50   Output ~ 0
 PC_LDSUM
 Wire Wire Line
-	9650 1050 9650 1650
+	19000 1050 19000 1650
 Wire Wire Line
-	9750 1650 9750 1050
+	19100 1650 19100 1050
 Wire Wire Line
-	9850 1050 9850 1650
+	19200 1050 19200 1650
 Wire Wire Line
-	9950 1050 9950 1650
+	19300 1050 19300 1650
 Text HLabel 10050 1050 1    50   Output ~ 0
 G_LEFT
 Text HLabel 10150 1050 1    50   Output ~ 0
@@ -5941,8 +5873,8 @@ Connection ~ 13900 2250
 Connection ~ 18150 1400
 Connection ~ 17950 1450
 Wire Wire Line
-	19100 1050 19100 1650
-Text HLabel 19100 1050 1    50   Output ~ 0
+	9750 1050 9750 1650
+Text HLabel 9750 1050 1    50   Output ~ 0
 ALU_RDACC#
 Wire Wire Line
 	18900 1650 18900 1050
@@ -5955,16 +5887,16 @@ Wire Wire Line
 Wire Wire Line
 	18600 1050 18600 1650
 Wire Wire Line
-	19300 1650 19300 1050
+	9950 1650 9950 1050
 Wire Wire Line
-	19200 1050 19200 1650
-Text HLabel 19300 1050 1    50   Output ~ 0
+	9850 1050 9850 1650
+Text HLabel 9950 1050 1    50   Output ~ 0
 BAK_RESTORE#
-Text HLabel 19200 1050 1    50   Output ~ 0
+Text HLabel 9850 1050 1    50   Output ~ 0
 BAK_SAVE#
 Wire Wire Line
-	19000 1050 19000 1650
-Text HLabel 19000 1050 1    50   Output ~ 0
+	9650 1050 9650 1650
+Text HLabel 9650 1050 1    50   Output ~ 0
 ALU_WRACC#
 Text HLabel 18800 1050 1    50   Output ~ 0
 ACC_OUT#
@@ -6003,10 +5935,10 @@ NoConn ~ 17250 1750
 NoConn ~ 17150 1750
 NoConn ~ 17050 1750
 $Comp
-L Memory_Flash:SST39SF010 U9
+L Memory_Flash:SST39SF010 CONTROL2
 U 1 1 9D597AA5
 P 19800 2250
-F 0 "U9" V 20100 2050 50  0000 C CNN
+F 0 "CONTROL2" V 20100 1350 50  0000 C CNN
 F 1 "SST39SF010" V 20100 2400 50  0000 C CNN
 F 2 "" H 19800 2550 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/25022B.pdf" H 19800 2550 50  0001 C CNN
@@ -6179,9 +6111,9 @@ Wire Wire Line
 Wire Wire Line
 	16100 8100 16750 8100
 Wire Wire Line
-	16950 3050 16950 3150
+	16950 3200 16950 3300
 Wire Wire Line
-	16950 3150 17250 3150
+	16950 3300 17250 3300
 Connection ~ 16150 8150
 Wire Wire Line
 	16150 8150 18800 8150
@@ -6594,10 +6526,6 @@ Wire Wire Line
 Text Notes 28900 16850 0    50   ~ 0
 TODO: Connect to Clipping ROM
 Wire Wire Line
-	5600 5000 6900 5000
-Wire Bus Line
-	6800 3650 6800 6000
-Wire Wire Line
 	16100 6900 16100 7500
 Connection ~ 16100 7500
 Wire Wire Line
@@ -6692,8 +6620,6 @@ Connection ~ 16750 6150
 Connection ~ 16850 6100
 Connection ~ 16950 6050
 Connection ~ 17050 6000
-Wire Wire Line
-	11950 3000 9550 3000
 Connection ~ 11950 3000
 Wire Wire Line
 	9550 3000 9550 6850
@@ -7181,7 +7107,7 @@ PRGM#
 Text GLabel 10750 9800 0    50   Input ~ 0
 PRGMCLK
 Text GLabel 10750 9500 0    50   Input ~ 0
-CLOCK#
+CLOCK
 Wire Wire Line
 	10750 9500 11100 9500
 Wire Wire Line
@@ -7281,18 +7207,11 @@ F 3 "~" H 12050 8800 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	12200 8800 12200 8600
-Wire Wire Line
-	11700 8800 11800 8800
 Connection ~ 11700 8800
 Wire Wire Line
 	12200 9100 12200 8900
 Wire Wire Line
 	12200 8900 11800 8900
-Wire Wire Line
-	11800 8900 11800 8800
-Connection ~ 11800 8800
-Wire Wire Line
-	11800 8800 11900 8800
 Connection ~ 12200 8600
 Wire Wire Line
 	17350 8600 17350 11650
@@ -7384,6 +7303,94 @@ Wire Wire Line
 Wire Wire Line
 	12250 6750 12250 11400
 Wire Wire Line
+	5600 5000 6900 5000
+Wire Bus Line
+	6800 3650 6800 6000
+Wire Wire Line
+	6150 14750 6150 15450
+Connection ~ 6150 14750
+Wire Wire Line
+	6150 14750 7100 14750
+Wire Wire Line
+	4250 14750 4250 14900
+Wire Wire Line
+	4250 14900 6050 14900
+Wire Wire Line
+	6050 14900 6050 15450
+Connection ~ 4250 14750
+Wire Wire Line
+	4250 14750 4300 14750
+Wire Wire Line
+	19400 3650 19400 2850
+Wire Wire Line
+	19500 2850 19500 3650
+Wire Wire Line
+	19600 3650 19600 2850
+Wire Wire Line
+	19700 2850 19700 3650
+Wire Wire Line
+	19800 3650 19800 2850
+Wire Wire Line
+	19900 2850 19900 3650
+Text HLabel 19400 3650 3    50   Input ~ 0
+PC_SUM_SIGN
+Text HLabel 19500 3650 3    50   Input ~ 0
+BUS_SIGN
+Text HLabel 19600 3650 3    50   Input ~ 0
+PC_SGTE
+Text HLabel 19700 3650 3    50   Input ~ 0
+PC_CEQE
+Text HLabel 19800 3650 3    50   Input ~ 0
+ACC_EQZ
+Text HLabel 19900 3650 3    50   Input ~ 0
+ACC_NEG
+Wire Wire Line
+	18450 2950 20000 2950
+Connection ~ 18450 2950
+Wire Wire Line
+	20000 2850 20000 2950
+Connection ~ 20000 2950
+Wire Wire Line
+	20000 2950 20100 2950
+Wire Wire Line
+	15700 3200 10750 3200
+Wire Wire Line
+	10750 3200 10750 2850
+Connection ~ 15700 3200
+Wire Wire Line
+	13900 2950 11250 2950
+Wire Wire Line
+	10850 2950 10850 2850
+Connection ~ 13900 2950
+Wire Wire Line
+	10950 2850 10950 2950
+Connection ~ 10950 2950
+Wire Wire Line
+	10950 2950 10850 2950
+Connection ~ 11050 2950
+Wire Wire Line
+	11050 2950 10950 2950
+Wire Wire Line
+	11050 2850 11050 2950
+Wire Wire Line
+	11150 2850 11150 2950
+Connection ~ 11150 2950
+Wire Wire Line
+	11150 2950 11050 2950
+Wire Wire Line
+	11950 3000 9550 3000
+Wire Wire Line
+	11250 2850 11250 2950
+Connection ~ 11250 2950
+Wire Wire Line
+	11250 2950 11150 2950
+Wire Wire Line
+	11700 8800 11900 8800
+Wire Wire Line
+	11800 8900 11800 8850
+Wire Wire Line
+	11800 8850 11300 8850
+Wire Wire Line
 	5500 5100 6900 5100
 Wire Wire Line
 	5400 5200 6900 5200
@@ -7405,6 +7412,8 @@ Wire Wire Line
 	4600 6000 6900 6000
 Wire Wire Line
 	4500 6100 6900 6100
+Wire Wire Line
+	17700 8250 21100 8250
 Wire Bus Line
 	6300 4300 6700 4300
 Wire Bus Line

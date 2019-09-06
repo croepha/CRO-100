@@ -1,40 +1,41 @@
 
 
-#define FLASH_PIN0 21
+#define FLASH_PIN_SIDE0 21
+#define FLASH_PIN_SIDE1 20
 
-#define FLASH_CE (FLASH_PIN0+22)
-#define FLASH_OE (FLASH_PIN0+24)
-#define FLASH_WE (FLASH_PIN0+31)
+#define FLASH_CE (FLASH_PIN_SIDE1+22)
+#define FLASH_OE (FLASH_PIN_SIDE1+24)
+#define FLASH_WE (FLASH_PIN_SIDE1+31)
 
 static const int ADDRESS_PIN[] = {
-    [ 0] = FLASH_PIN0+12,
-    [ 1] = FLASH_PIN0+11,
-    [ 2] = FLASH_PIN0+10,
-    [ 3] = FLASH_PIN0+ 9,
-    [ 4] = FLASH_PIN0+ 8,
-    [ 5] = FLASH_PIN0+ 7,
-    [ 6] = FLASH_PIN0+ 6,
-    [ 7] = FLASH_PIN0+ 5,
-    [ 8] = FLASH_PIN0+27,
-    [ 9] = FLASH_PIN0+26,
-    [10] = FLASH_PIN0+23,
-    [11] = FLASH_PIN0+25,
-    [12] = FLASH_PIN0+ 4,
-    [13] = FLASH_PIN0+28,
-    [14] = FLASH_PIN0+29,
-    [15] = FLASH_PIN0+ 3,
-    [16] = FLASH_PIN0+ 2,
+    [ 0] = FLASH_PIN_SIDE0+12,
+    [ 1] = FLASH_PIN_SIDE0+11,
+    [ 2] = FLASH_PIN_SIDE0+10,
+    [ 3] = FLASH_PIN_SIDE0+ 9,
+    [ 4] = FLASH_PIN_SIDE0+ 8,
+    [ 5] = FLASH_PIN_SIDE0+ 7,
+    [ 6] = FLASH_PIN_SIDE0+ 6,
+    [ 7] = FLASH_PIN_SIDE0+ 5,
+    [ 8] = FLASH_PIN_SIDE1+27,
+    [ 9] = FLASH_PIN_SIDE1+26,
+    [10] = FLASH_PIN_SIDE1+23,
+    [11] = FLASH_PIN_SIDE1+25,
+    [12] = FLASH_PIN_SIDE0+ 4,
+    [13] = FLASH_PIN_SIDE1+28,
+    [14] = FLASH_PIN_SIDE1+29,
+    [15] = FLASH_PIN_SIDE0+ 3,
+    [16] = FLASH_PIN_SIDE0+ 2,
 };
 
 static const int DATA_PIN[] = {
-    [ 0] = FLASH_PIN0+13,
-    [ 1] = FLASH_PIN0+14,
-    [ 2] = FLASH_PIN0+15,
-    [ 3] = FLASH_PIN0+17,
-    [ 4] = FLASH_PIN0+18,
-    [ 5] = FLASH_PIN0+19,
-    [ 6] = FLASH_PIN0+20,
-    [ 7] = FLASH_PIN0+21,
+    [ 0] = FLASH_PIN_SIDE0+13,
+    [ 1] = FLASH_PIN_SIDE0+14,
+    [ 2] = FLASH_PIN_SIDE0+15,
+    [ 3] = FLASH_PIN_SIDE1+17,
+    [ 4] = FLASH_PIN_SIDE1+18,
+    [ 5] = FLASH_PIN_SIDE1+19,
+    [ 6] = FLASH_PIN_SIDE1+20,
+    [ 7] = FLASH_PIN_SIDE1+21,
 };
 
 void set_address_pins(unsigned  long address) {
@@ -388,7 +389,7 @@ void test2() {
         debug_print_address(1UL<<i1);
     }
     for (int i2=0;i2<17;i2++) {
-        flash_write_byte(1UL<<i2, 0);
+        flash_write_byte(1UL<<i2, i2*3);
         for (int i1=0;i1<17;i1++) {
             debug_print_address(1UL<<i1);
         }
@@ -400,22 +401,35 @@ void test2() {
 void setup() {
     // initialize digital pin LED_BUILTIN as an output.
     
+    Serial.begin(2000000);
+    while (Serial.available() > 0) {
+        Serial.read();
+    }
+    
     for (int i=0; i<54; i++) {
         pinMode(i, INPUT);
     }
     
+    
     pinMode(FLASH_CE, OUTPUT);
     pinMode(FLASH_OE, OUTPUT);
     pinMode(FLASH_WE, OUTPUT);
+    pinMode(LED_BUILTIN, OUTPUT);
+    
+    
     for(int i=0;i<17;i++) {
         pinMode(ADDRESS_PIN[i], OUTPUT);
     }
     
-    pinMode(LED_BUILTIN, OUTPUT);
     
+#if 0
+    Serial.print("TWO\n");
+    for (int i1=0;i1<17;i1++) {
+        debug_print_address(1UL<<i1);
+    }
+#endif
     
     Serial.begin(2000000);
-    
     
     while (Serial.available() > 0) {
         Serial.read();
@@ -429,6 +443,16 @@ void setup() {
     digitalWrite(FLASH_OE, LOW);
     digitalWrite(FLASH_WE, HIGH);
     delay(1);
+    
+#if 0
+    Serial.print("THREE\n");
+    for (int i1=0;i1<17;i1++) {
+        debug_print_address(1UL<<i1);
+    }
+#endif
+    
+    
+    
     
     flash_enter_software_id();
     Serial.print("Data: 0x");

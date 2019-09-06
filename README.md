@@ -112,7 +112,12 @@ for muxing circuit
 bounds checking, automatic looping 
 - Loads program in from tape, not DIP switches
 
+![img3](https://i.imgur.com/Wh6qcAS.jpg)
+![vid1](https://cdn.discordapp.com/attachments/404399251276169217/619401317634277406/video0.mov)
+![img2](https://cdn.discordapp.com/attachments/404399251276169217/615481213477453859/image0.jpg)
 ![vid0](https://cdn.discordapp.com/attachments/404399251276169217/613442872108253189/video0.mov)
 ![img1](https://cdn.discordapp.com/attachments/404399251276169217/612218508113215498/image0.jpg)
 ![img0](https://cdn.discordapp.com/attachments/404399251276169217/611803958545088523/image0.jpg)
+
+
 

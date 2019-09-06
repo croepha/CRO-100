@@ -9,7 +9,7 @@ junk/arduino-1.8.9/arduino \
  --port /dev/ttyUSB1
 }
 
-[ ! ]&&{
+[  ]&&{
 junk/arduino-1.8.9/arduino \
  --board arduino:avr:mega \
  --verify cassette_tape_emulator/cassette_tape_emulator.ino \
@@ -38,6 +38,24 @@ clang++ -O0 -g -Wno-writable-strings $(pwd)/create_segment_flash_data.cpp -o bui
 [ ! ]&&{
 clang++ -O0 -g -Wno-writable-strings $(pwd)/create_clipping_rom_data.cpp -o build/create_clipping_rom_data.exec -fsanitize=address
 }
+
+[ ! ]&&{
+clang++ -O0 -g -Wno-writable-strings $(pwd)/create_lut_for_control0.cpp -o build/create_lut_for_control0.exec -fsanitize=address
+build/create_lut_for_control0.exec
+}
+
+[ ! ]&&{
+clang++ -O0 -g -Wno-writable-strings $(pwd)/create_lut_for_control1.cpp -o build/create_lut_for_control1.exec -fsanitize=address
+build/create_lut_for_control1.exec
+}
+
+
+
+[ ! ]&&{
+clang++ -O0 -g -Wno-writable-strings $(pwd)/create_lut_for_control2.cpp -o build/create_lut_for_control2.exec -fsanitize=address
+build/create_lut_for_control2.exec
+}
+
 
 #clang++ rom0.cpp -o rom0.exec
 #./rom0.exec
